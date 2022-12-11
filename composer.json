@@ -1,0 +1,23 @@
+{
+  "name": "starbug/config",
+  "description": "A configuration data loader.",
+  "keywords": ["template"],
+  "license": "GPL-3.0-or-later",
+  "authors": [
+    {
+      "name": "Ali Gangji",
+      "homepage": "https://github.com/cogentParadigm"
+    }
+  ],
+  "require": {
+    "starbug/resource-locator": "^0.9.1"
+  },
+  "require-dev": {
+    "starbug/devel": "^1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Starbug\\Config\\": "src/"
+    }
+  }
+}

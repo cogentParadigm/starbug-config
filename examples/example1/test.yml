@@ -1,0 +1,9 @@
+---
+missing:
+  controller:
+    - Starbug\Core\Controller
+    - missing
+forbidden:
+  controller:
+    - Starbug\Core\Controller
+    - forbidden

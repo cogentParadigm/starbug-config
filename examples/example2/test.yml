@@ -1,0 +1,5 @@
+---
+forbidden:
+  groups: user
+profile:
+  view: profile.html

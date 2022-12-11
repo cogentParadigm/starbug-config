@@ -1,0 +1,4 @@
+suites:
+  default:
+    namespace: Starbug\Config
+    psr4_prefix: Starbug\Config
