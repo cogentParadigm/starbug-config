@@ -6,29 +6,26 @@ use Starbug\ResourceLocator\ResourceLocatorInterface;
 class Config implements ConfigInterface {
 
   protected $locator;
+  protected $dir;
   protected $configs = [];
 
-  public function __construct(ResourceLocatorInterface $locator) {
+  public function __construct(ResourceLocatorInterface $locator, $dir = "etc") {
     $this->locator = $locator;
+    $this->dir = $dir;
   }
 
   /**
-   * Get configuration value(s)
+   * Get configuration value
    *
-   * @param string $name the name of the configuration entry, such as 'themes' or 'fixtures.base'.
-   * @param string $scope the scope/category of the configuration item.
+   * @param string $key the name of the configuration entry.
    *
-   * @return string|array configuration value(s)
+   * @return string|array configuration value
    */
-  public function get($key, $scope = "etc") {
-    $parts = explode(".", $key);
-
-    $key = array_shift($parts);
-
+  public function get($key) {
     if (empty($this->configs[$key])) {
       $resourceTypes = [
-        "yml" => $this->locator->locate($key.".yml", $scope),
-        "json" => $this->locator->locate($key.".json", $scope)
+        "yml" => $this->locator->locate($key.".yml", $this->dir),
+        "json" => $this->locator->locate($key.".json", $this->dir)
       ];
       $result = [];
       foreach ($resourceTypes as $type => $resources) {
@@ -40,14 +37,17 @@ class Config implements ConfigInterface {
       $this->configs[$key] = $result;
     }
 
-    $value = $this->configs[$key];
+    return $this->configs[$key];
+  }
 
-    while (!empty($parts)) {
-      $next = array_shift($parts);
-      $value = $value[$next];
-    }
-
-    return $value;
+  /**
+   * Set configuration value
+   *
+   * @param string $key The name of the configuration entry.
+   * @param mixed $value The configuration value.
+   */
+  public function set($key, $value) {
+    $this->configs[$key] = $value;
   }
 
   /**
